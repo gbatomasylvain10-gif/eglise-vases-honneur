@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-[#f8f6f0]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lifts / Transport — Église Vases d'Honneur</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-full text-slate-800 antialiased font-sans">
+
+  <div class="min-h-full flex">
+
+    <!-- BARRE LATÉRALE (Navigation garantie) -->
+        <!-- BARRE LATÉRALE (Navigation garantie et prioritaire) -->
+    <aside class="w-64 bg-[#2b2d32] text-slate-300 flex-col shrink-0 min-h-screen hidden md:flex relative z-50">
+
+      <div class="p-6 text-center border-b border-slate-700/50">
+        <div class="text-amber-500 text-2xl font-serif mb-1">✝</div>
+        <h2 class="text-sm font-semibold tracking-wider text-slate-100 uppercase">Vases d'Honneur</h2>
+        <p class="text-xs text-slate-400">Jonquière</p>
+      </div>
+
+      <nav class="flex-1 px-4 py-6 space-y-1 text-sm font-medium">
+
+        <a href="/admin.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🏠</span><span>Tableau de Bord</span>
+        </a>
+
+        <a href="/membres.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>👥</span><span>Membres</span>
+        </a>
+
+        <a href="/presences.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🙏</span><span>Suivi Pastoral</span>
+        </a>
+
+        <a href="/evangelisation.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>📢</span><span>Évangélisation</span>
+        </a>
+
+        <a href="/lifts.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🚐</span><span>Transport/Lifts</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🏛️</span><span>Départements</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>📅</span><span>Événements</span>
+        </a>
+
+      </nav>
+
+      <div class="p-4 border-t border-slate-700/50">
+        <button id="btnDeconnexion" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition text-sm font-medium">
+          <span>🚪</span><span>Déconnexion</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- CONTENU -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="px-8 py-6 max-w-6xl mx-auto w-full">
+        <h1 class="text-xl font-bold text-slate-900">🚐 Transport / Lifts</h1>
+        <p class="text-sm text-slate-600">Gestion des demandes et offres de transport pour les cultes</p>
+      </header>
+
+      <main class="px-8 pb-10 space-y-6 max-w-6xl mx-auto w-full">
+
+        <!-- STATISTIQUES -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm">
+          <div class="mb-4">
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Vue d'ensemble</span>
+            <h3 class="text-lg font-bold text-slate-800">Statistiques des lifts</h3>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+            <div class="bg-white rounded-xl p-4 border border-stone-200 border-t-4 border-t-red-500 text-center">
+              <p class="text-2xl font-extrabold text-slate-900" id="statDemandes">0</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mt-1">🙋 Demandes</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-stone-200 border-t-4 border-t-amber-500 text-center">
+              <p class="text-2xl font-extrabold text-slate-900" id="statDemandesAttente">0</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mt-1">⏳ En attente</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-stone-200 border-t-4 border-t-blue-500 text-center">
+              <p class="text-2xl font-extrabold text-slate-900" id="statOffres">0</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mt-1">🚗 Offres</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-stone-200 border-t-4 border-t-amber-500 text-center">
+              <p class="text-2xl font-extrabold text-slate-900" id="statOffresAttente">0</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mt-1">⏳ En attente</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-stone-200 border-t-4 border-t-emerald-500 text-center">
+              <p class="text-2xl font-extrabold text-slate-900" id="statPlaces">0</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mt-1">💺 Places</p>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button id="btnTerminerJournee" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-lg transition shadow-sm">
+              🗑️ Terminer la journée (supprimer tous les lifts)
+            </button>
+          </div>
+        </div>
+
+        <!-- FORMULAIRE AJOUT -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm">
+          <div class="mb-4">
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Nouveau</span>
+            <h3 class="text-lg font-bold text-slate-800">Ajouter une demande ou une offre</h3>
+          </div>
+          <form id="formLift" class="space-y-4">
+            <div>
+              <label class="text-xs font-semibold text-slate-700 mb-2 block">Type <span class="text-red-500">*</span></label>
+              <div class="flex gap-4">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="type" value="Demande" checked class="w-4 h-4">
+                  <span class="text-sm">🙋 Demande de lift (passager)</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="type" value="Offre" class="w-4 h-4">
+                  <span class="text-sm">🚗 Offre de lift (conducteur)</span>
+                </label>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">Nom complet <span class="text-red-500">*</span></label>
+                <input type="text" id="nomComplet" required class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 outline-none" placeholder="Ex : Jean Tremblay">
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">Téléphone</label>
+                <input type="tel" id="telephone" maxlength="10" class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 outline-none" placeholder="4181234567">
+                <p id="adresseMemo" class="text-xs text-emerald-600 mt-1 hidden">✓ Adresse retrouvée</p>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">Secteur</label>
+                <select id="secteur" class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 outline-none">
+                  <option value="">Sélectionner</option>
+                  <option value="Chicoutimi">Chicoutimi</option>
+                  <option value="Jonquière">Jonquière</option>
+                  <option value="Arvida">Arvida</option>
+                  <option value="Alma">Alma</option>
+                  <option value="Autre">Autre</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">🏠 Adresse</label>
+                <input type="text" id="adresse" class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 outline-none" placeholder="Ex : 123 rue Principale">
+              </div>
+              <div id="placesContainer" style="display: none;">
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">💺 Places disponibles (Limite stricte)</label>
+                <input type="number" id="places" min="1" max="8" value="1" class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 outline-none">
+              </div>
+              <div id="personnesContainer">
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">👥 Nombre de personnes</label>
+                <select id="nombre_personnes" class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 outline-none">
+                  <option value="1">👤 Seul(e)</option>
+                  <option value="2">👥 2 personnes</option>
+                  <option value="3">👥 3 personnes</option>
+                  <option value="4">👥 4 personnes</option>
+                  <option value="5">👥 5 personnes</option>
+                </select>
+              </div>
+              <div class="md:col-span-2">
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">Notes</label>
+                <input type="text" id="notes" class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 outline-none" placeholder="Ex : Besoin d'un lift pour dimanche matin">
+              </div>
+            </div>
+            <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-lg transition shadow-sm">➕ Ajouter</button>
+          </form>
+        </div>
+
+        <!-- LISTE GROUPÉE PAR SECTEUR -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm">
+          <div class="mb-4">
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Organisation</span>
+            <h3 class="text-lg font-bold text-slate-800">📍 Groupé par secteur</h3>
+          </div>
+          <div id="listeSecteurs" class="space-y-4">
+            <p class="text-sm text-slate-500 text-center py-8">Chargement...</p>
+          </div>
+        </div>
+
+        <footer class="text-center text-xs text-slate-500 pt-4">
+          <p>Église Vases d'Honneur de Jonquière</p>
+          <p>Que Dieu vous bénisse abondamment 🤍</p>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+    <!-- MODAL MODIFICATION (Adresse + Places ou Nombre de personnes) -->
+  <div id="modalModifier" style="display:none;" class="fixed inset-0 bg-black/50 items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
+      <h3 class="text-lg font-bold text-slate-900 mb-2">✏️ Modifier les informations</h3>
+      <p class="text-sm text-slate-600 mb-4" id="modalNom"></p>
+      <input type="hidden" id="modalLiftId">
+      <input type="hidden" id="modalLiftType">
+      
+      <div class="space-y-3">
+        <div>
+          <label class="text-xs font-semibold text-slate-700 mb-1 block">Adresse</label>
+          <input type="text" id="modalNouvelleAdresse" class="w-full px-4 py-2 rounded-lg border border-stone-300 text-sm focus:border-teal-500 outline-none">
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-700 mb-1 block">Secteur</label>
+          <select id="modalNouveauSecteur" class="w-full px-4 py-2 rounded-lg border border-stone-300 text-sm focus:border-teal-500 outline-none">
+            <option value="">Sélectionner</option>
+            <option value="Chicoutimi">Chicoutimi</option>
+            <option value="Jonquière">Jonquière</option>
+            <option value="Arvida">Arvida</option>
+            <option value="Alma">Alma</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+        
+        <!-- Champ pour les Conducteurs (Offre) -->
+        <div id="modalPlacesContainer" style="display: none;">
+          <label class="text-xs font-semibold text-slate-700 mb-1 block">💺 Places disponibles (Limite)</label>
+          <input type="number" id="modalPlaces" min="1" max="8" class="w-full px-4 py-2 rounded-lg border border-stone-300 text-sm focus:border-teal-500 outline-none">
+          <p class="text-[10px] text-amber-600 mt-1">⚠️ Le système bloquera les assignations si cette limite est dépassée.</p>
+        </div>
+
+        <!-- NOUVEAU : Champ pour les Passagers (Demande) -->
+        <div id="modalNombrePersonnesContainer" style="display: none;">
+          <label class="text-xs font-semibold text-slate-700 mb-1 block">👥 Nombre de personnes</label>
+          <select id="modalNombrePersonnes" class="w-full px-4 py-2 rounded-lg border border-stone-300 text-sm focus:border-teal-500 outline-none">
+            <option value="1">👤 Seul(e)</option>
+            <option value="2">👥 2 personnes</option>
+            <option value="3">👥 3 personnes</option>
+            <option value="4">👥 4 personnes</option>
+            <option value="5">👥 5 personnes</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="flex gap-2 mt-5">
+        <button id="btnModalAnnuler" class="flex-1 bg-stone-200 hover:bg-stone-300 text-slate-700 font-semibold px-4 py-2 rounded-lg transition">Annuler</button>
+        <button id="btnModalEnregistrer" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold px-4 py-2 rounded-lg transition">💾 Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ASSIGNATION -->
+  <div id="modalAssigner" style="display:none;" class="fixed inset-0 bg-black/50 items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
+      <h3 class="text-lg font-bold text-slate-900 mb-2">🚗 Assigner un conducteur</h3>
+      <p class="text-sm text-slate-600 mb-4" id="modalAssignerNom"></p>
+      <input type="hidden" id="modalPassagerId">
+      <input type="hidden" id="modalPassagerNombre">
+      <div>
+        <label class="text-xs font-semibold text-slate-700 mb-1 block">Choisir un conducteur</label>
+        <select id="modalConducteurSelect" class="w-full px-4 py-2 rounded-lg border border-stone-300 text-sm focus:border-teal-500 outline-none">
+          <!-- Options générées dynamiquement -->
+        </select>
+        <p id="modalAssignerWarning" class="text-[10px] text-red-600 mt-1 hidden">⚠️ Ce conducteur n'a pas assez de places pour ce groupe.</p>
+      </div>
+      <div class="flex gap-2 mt-5">
+        <button id="btnAssignerAnnuler" class="flex-1 bg-stone-200 hover:bg-stone-300 text-slate-700 font-semibold px-4 py-2 rounded-lg transition">Annuler</button>
+        <button id="btnAssignerConfirmer" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition">✓ Assigner</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="lifts.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Connexion — Église Vases d'Honneur de Jonquière"
+    >
+
+    <title>
+        Connexion — Église Vases d'Honneur
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <main class="page">
+
+
+        <!-- ============================================
+             EN-TÊTE
+        ============================================= -->
+
+        <header class="hero">
+
+            <div class="hero-content">
+
+                <div class="church-symbol">
+                    ✝
+                </div>
+
+                <p class="church-name">
+                    ÉGLISE VASES D'HONNEUR
+                </p>
+
+                <h1>
+                    JONQUIÈRE
+                </h1>
+
+                <div class="hero-line"></div>
+
+                <p class="hero-subtitle">
+                    Connexion
+                </p>
+
+                <p class="hero-description">
+                    Connectez-vous pour accéder
+                    à votre espace.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ============================================
+             CONNEXION
+        ============================================= -->
+
+        <section class="form-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🔐
+                </div>
+
+                <div>
+
+                    <span class="section-number">
+                        ESPACE SÉCURISÉ
+                    </span>
+
+                    <h2>
+                        Se connecter
+                    </h2>
+
+                    <p>
+                        Entrez vos identifiants pour continuer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <form id="loginForm">
+
+
+                <!-- COURRIEL -->
+
+                <div class="field">
+
+                    <label for="courriel">
+                        Courriel
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="courriel"
+                        name="courriel"
+                        placeholder="exemple@courriel.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- MOT DE PASSE -->
+
+                <div class="field">
+
+                    <label for="motDePasse">
+                        Mot de passe
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="password"
+                        id="motDePasse"
+                        name="motDePasse"
+                        placeholder="Votre mot de passe"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="messageConnexion"
+                    style="display:none;"
+                ></div>
+
+
+
+                <!-- BOUTON -->
+
+                <div class="submit-area">
+
+                    <button
+                        type="submit"
+                        class="submit-button"
+                    >
+                        🔐 Se connecter
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+
+        <!-- ============================================
+             PIED DE PAGE
+        ============================================= -->
+
+        <footer>
+
+            <p>
+                Église Vases d'Honneur de Jonquière
+            </p>
+
+            <p>
+                Que Dieu vous bénisse abondamment 🤍
+            </p>
+
+        </footer>
+
+
+    </main>
+
+    <script src="login.js"></script>
+
+</body>
+
+</html>

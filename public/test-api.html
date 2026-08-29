@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test API — Église Vases d'Honneur</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="page">
+        <header class="hero">
+            <div class="hero-content">
+                <h1>🧪 Test API</h1>
+                <p>Test des routes de l'API</p>
+            </div>
+        </header>
+
+        <section class="form-section">
+            <div class="section-heading">
+                <div class="section-icon">📊</div>
+                <div>
+                    <h2>Statistiques de présence</h2>
+                    <p>Test de la route /api/statistiques/presences</p>
+                </div>
+            </div>
+
+            <div class="submit-area">
+                <button id="btnTester" class="submit-button">
+                    🔄 Tester l'API
+                </button>
+
+                <a href="/admin.html" class="submit-button">
+                    ← Retour au tableau de bord
+                </a>
+            </div>
+
+            <div class="field field-full" style="margin-top: 20px;">
+                <label>Résultat :</label>
+                <pre id="resultat" style="
+                    background: #f8f9fa;
+                    padding: 20px;
+                    border-radius: 8px;
+                    border: 1px solid #dee2e6;
+                    font-family: monospace;
+                    white-space: pre-wrap;
+                    min-height: 200px;
+                ">Cliquez sur le bouton pour tester...</pre>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const btnTester = document.getElementById("btnTester");
+        const resultat = document.getElementById("resultat");
+
+        btnTester.addEventListener("click", async () => {
+            try {
+                resultat.textContent = "⏳ Chargement...";
+
+                const response = await fetch("/api/statistiques/presences");
+
+                const data = await response.json();
+
+                resultat.textContent = JSON.stringify(data, null, 2);
+
+                if (!response.ok) {
+                    resultat.style.background = "#f8d7da";
+                } else {
+                    resultat.style.background = "#d4edda";
+                }
+            }
+            catch (error) {
+                resultat.textContent = "❌ Erreur : " + error.message;
+                resultat.style.background = "#f8d7da";
+            }
+        });
+    </script>
+</body>
+</html>

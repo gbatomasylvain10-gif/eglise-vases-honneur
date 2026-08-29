@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-[#f8f6f0]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Évangélisation - Église Vases d'Honneur</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-full text-slate-800 antialiased font-sans">
+
+  <div class="min-h-full flex">
+
+    <!-- BARRE LATÉRALE -->
+        <!-- BARRE LATÉRALE (Navigation garantie et prioritaire) -->
+    <aside class="w-64 bg-[#2b2d32] text-slate-300 flex-col shrink-0 min-h-screen hidden md:flex relative z-50">
+
+      <div class="p-6 text-center border-b border-slate-700/50">
+        <div class="text-amber-500 text-2xl font-serif mb-1">✝</div>
+        <h2 class="text-sm font-semibold tracking-wider text-slate-100 uppercase">Vases d'Honneur</h2>
+        <p class="text-xs text-slate-400">Jonquière</p>
+      </div>
+
+      <nav class="flex-1 px-4 py-6 space-y-1 text-sm font-medium">
+
+        <a href="/admin.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🏠</span><span>Tableau de Bord</span>
+        </a>
+
+        <a href="/membres.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>👥</span><span>Membres</span>
+        </a>
+
+        <a href="/presences.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🙏</span><span>Suivi Pastoral</span>
+        </a>
+
+        <a href="/evangelisation.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>📢</span><span>Évangélisation</span>
+        </a>
+
+        <a href="/lifts.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🚐</span><span>Transport/Lifts</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🏛️</span><span>Départements</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>📅</span><span>Événements</span>
+        </a>
+
+      </nav>
+
+      <div class="p-4 border-t border-slate-700/50">
+        <button id="btnDeconnexion" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition text-sm font-medium">
+          <span>🚪</span><span>Déconnexion</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- CONTENU PRINCIPAL -->
+    <div class="flex-1 flex flex-col">
+
+            <header class="px-8 py-6 max-w-6xl mx-auto w-full">
+        <h1 class="text-xl font-bold text-slate-900">📢 Évangélisation</h1>
+        <p class="text-sm text-slate-600">Suivi du parcours des personnes rencontrées</p>
+      </header>
+
+            <main class="px-8 pb-10 space-y-6 max-w-6xl mx-auto w-full">
+
+        <!-- ============================================
+             ENTONNOIR D'ÉVANGÉLISATION
+        ============================================= -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm">
+          <div class="mb-4">
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Vue d'ensemble</span>
+            <h3 class="text-lg font-bold text-slate-800">Entonnoir d'évangélisation</h3>
+            <p class="text-xs text-slate-500">Parcours complet des personnes rencontrées</p>
+          </div>
+
+          <!-- Total global -->
+          <div class="mb-4 text-center bg-white rounded-xl p-4 border border-stone-200">
+            <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold">Total des personnes</p>
+            <p class="text-4xl font-extrabold text-slate-900 mt-1" id="totalGlobal">0</p>
+          </div>
+
+          <!-- Les 6 étapes -->
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3" id="entonnoir">
+            <!-- Rempli dynamiquement par JS -->
+          </div>
+        </div>
+
+        <!-- ============================================
+             AJOUTER UNE PERSONNE
+        ============================================= -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm">
+          <div class="mb-4">
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Nouvelle rencontre</span>
+            <h3 class="text-lg font-bold text-slate-800">Ajouter une personne rencontrée</h3>
+            <p class="text-xs text-slate-500">Enregistrez une nouvelle personne dans le parcours</p>
+          </div>
+
+          <form id="formNouvellePersonne" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">
+                  Nom complet <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="nomComplet" required
+                  class="w-full px-4 py-2 rounded-lg border border-stone-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition"
+                  placeholder="Ex : Jean Tremblay">
+              </div>
+
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">Téléphone</label>
+                <input type="tel" id="telephone" maxlength="10"
+                  class="w-full px-4 py-2 rounded-lg border border-stone-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition"
+                  placeholder="Ex : 4181234567">
+              </div>
+
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">Courriel</label>
+                <input type="email" id="courriel"
+                  class="w-full px-4 py-2 rounded-lg border border-stone-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition"
+                  placeholder="exemple@email.com">
+              </div>
+
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">Secteur</label>
+                <select id="secteur"
+                  class="w-full px-4 py-2 rounded-lg border border-stone-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition">
+                  <option value="">Sélectionner</option>
+                  <option value="Chicoutimi">Chicoutimi</option>
+                  <option value="Jonquière">Jonquière</option>
+                  <option value="Arvida">Arvida</option>
+                  <option value="Alma">Alma</option>
+                  <option value="Autre">Autre</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">Responsable du suivi</label>
+                <input type="text" id="responsable"
+                  class="w-full px-4 py-2 rounded-lg border border-stone-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition"
+                  placeholder="Nom de la personne qui suit">
+              </div>
+
+              <div>
+                <label class="text-xs font-semibold text-slate-700 mb-1 block">Notes</label>
+                <input type="text" id="notes"
+                  class="w-full px-4 py-2 rounded-lg border border-stone-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition"
+                  placeholder="Ex : Rencontré lors de l'événement X">
+              </div>
+            </div>
+
+            <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-lg transition shadow-sm">
+              ➕ Ajouter cette personne
+            </button>
+          </form>
+        </div>
+
+        <!-- ============================================
+             FILTRES
+        ============================================= -->
+        <div class="bg-[#f0ebe1] p-4 rounded-2xl border border-stone-200/60 shadow-sm">
+          <div class="flex flex-wrap gap-2 items-center">
+            <span class="text-sm font-semibold text-slate-700">Filtrer :</span>
+            <button data-filtre="Toutes" class="filtre-btn bg-teal-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">Toutes</button>
+            <button data-filtre="Rencontrée" class="filtre-btn bg-white border border-stone-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition hover:bg-stone-50">🤝 Rencontrée</button>
+            <button data-filtre="Contactée" class="filtre-btn bg-white border border-stone-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition hover:bg-stone-50">📞 Contactée</button>
+            <button data-filtre="Invitée" class="filtre-btn bg-white border border-stone-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition hover:bg-stone-50">💌 Invitée</button>
+            <button data-filtre="Première visite" class="filtre-btn bg-white border border-stone-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition hover:bg-stone-50">🚪 Première visite</button>
+            <button data-filtre="En suivi" class="filtre-btn bg-white border border-stone-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition hover:bg-stone-50">❤️ En suivi</button>
+            <button data-filtre="Intégrée" class="filtre-btn bg-white border border-stone-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition hover:bg-stone-50">✅ Intégrée</button>
+          </div>
+        </div>
+
+        <!-- ============================================
+             LISTE DES PERSONNES
+        ============================================= -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm">
+          <div class="mb-4 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Parcours</span>
+              <h3 class="text-lg font-bold text-slate-800">Liste des personnes</h3>
+              <p class="text-xs text-slate-500"><span id="nombrePersonnes">0</span> personne(s) au total</p>
+            </div>
+            <input type="text" id="recherchePersonne" placeholder="🔎 Rechercher..."
+              class="px-4 py-2 rounded-lg border border-stone-300 text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition w-64">
+          </div>
+
+          <div id="listePersonnes" class="space-y-3">
+            <p class="text-center text-slate-500 text-sm py-8">Chargement...</p>
+          </div>
+        </div>
+
+                <!-- ============================================
+             RESPONSABLES DU SUIVI
+        ============================================= -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm">
+
+          <div class="mb-4">
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Organisation</span>
+            <h3 class="text-lg font-bold text-slate-800">👤 Responsables du suivi</h3>
+            <p class="text-xs text-slate-500">Chaque responsable et les personnes qui lui sont assignées</p>
+          </div>
+
+          <div id="listeResponsables" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <p class="text-sm text-slate-500 text-center py-8 col-span-full">Chargement...</p>
+          </div>
+
+        </div>
+
+        <footer class="text-center text-xs text-slate-500 pt-4">
+          <p>Église Vases d'Honneur de Jonquière</p>
+          <p>Que Dieu vous bénisse abondamment 🤍</p>
+        </footer>
+
+      </main>
+    </div>
+
+  </div>
+
+  <script src="evangelisation.js"></script>
+
+</body>
+</html>

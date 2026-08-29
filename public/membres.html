@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-[#f8f6f0]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Membres — Église Vases d'Honneur</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Styles pour les lignes générées par membres.js */
+    #membersTableBody td { padding: 12px 16px; font-size: 14px; color: #334155; }
+    #membersTableBody tr { border-bottom: 1px solid #e7e5e4; transition: background 0.2s; }
+    #membersTableBody tr:hover { background: #faf9f7; }
+    #membersTableBody a { color: #0d9488; font-weight: 600; text-decoration: none; }
+    #membersTableBody a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="h-full text-slate-800 antialiased font-sans">
+
+  <div class="min-h-full flex">
+
+    <!-- BARRE LATÉRALE -->
+        <!-- BARRE LATÉRALE (Navigation garantie et prioritaire) -->
+    <aside class="w-64 bg-[#2b2d32] text-slate-300 flex-col shrink-0 min-h-screen hidden md:flex relative z-50">
+
+      <div class="p-6 text-center border-b border-slate-700/50">
+        <div class="text-amber-500 text-2xl font-serif mb-1">✝</div>
+        <h2 class="text-sm font-semibold tracking-wider text-slate-100 uppercase">Vases d'Honneur</h2>
+        <p class="text-xs text-slate-400">Jonquière</p>
+      </div>
+
+      <nav class="flex-1 px-4 py-6 space-y-1 text-sm font-medium">
+
+        <a href="/admin.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🏠</span><span>Tableau de Bord</span>
+        </a>
+
+        <a href="/membres.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>👥</span><span>Membres</span>
+        </a>
+
+        <a href="/presences.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🙏</span><span>Suivi Pastoral</span>
+        </a>
+
+        <a href="/evangelisation.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>📢</span><span>Évangélisation</span>
+        </a>
+
+        <a href="/lifts.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🚐</span><span>Transport/Lifts</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🏛️</span><span>Départements</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>📅</span><span>Événements</span>
+        </a>
+
+      </nav>
+
+      <div class="p-4 border-t border-slate-700/50">
+        <button id="btnDeconnexion" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition text-sm font-medium">
+          <span>🚪</span><span>Déconnexion</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- CONTENU -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+            <header class="px-8 py-6 max-w-6xl mx-auto w-full">
+        <h1 class="text-xl font-bold text-slate-900">👥 Gestion des membres</h1>
+        <p class="text-sm text-slate-600">Liste des personnes enregistrées dans la communauté</p>
+      </header>
+
+            <main class="px-8 pb-10 space-y-6 max-w-6xl mx-auto w-full">
+
+        <!-- RECHERCHE ET FILTRES -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm space-y-4">
+
+          <div>
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Recherche</span>
+            <h3 class="text-lg font-bold text-slate-800">Trouver un membre</h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+            <div class="lg:col-span-2">
+              <label class="text-xs font-semibold text-slate-700 mb-1 block">🔎 Rechercher</label>
+              <input type="text" id="recherche" placeholder="Nom, téléphone ou courriel..."
+                class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition">
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-700 mb-1 block">📍 Secteur</label>
+              <select id="filtreSecteur"
+                class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition">
+                <option value="">Tous les secteurs</option>
+                <option value="Chicoutimi">Chicoutimi</option>
+                <option value="Jonquière">Jonquière</option>
+                <option value="Arvida">Arvida</option>
+                <option value="Alma">Alma</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-700 mb-1 block">🏢 Département</label>
+              <select id="filtreDepartement"
+                class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition">
+                <option value="">Tous les départements</option>
+                <option value="La COM">La COM</option>
+                <option value="La chorale">La chorale</option>
+                <option value="L'accueil">L'accueil</option>
+                <option value="L'administration">L'administration</option>
+                <option value="Les enfants">Les enfants</option>
+                <option value="L'intercession">L'intercession</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-700 mb-1 block">👤 Fonction</label>
+              <select id="filtreFonction"
+                class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition">
+                <option value="">Toutes les fonctions</option>
+                <option value="Membre">Membre</option>
+                <option value="AP">AP</option>
+                <option value="Responsable de louange">Responsable de louange</option>
+                <option value="Responsable de la COM">Responsable de la COM</option>
+                <option value="Responsable de l'accueil">Responsable de l'accueil</option>
+                <option value="Les Boss">Les Boss</option>
+              </select>
+            </div>
+
+            <div class="flex items-end">
+              <button type="button" id="resetFiltres"
+                class="w-full bg-stone-200 hover:bg-stone-300 text-slate-700 text-sm font-semibold px-4 py-2 rounded-lg transition">
+                ↺ Réinitialiser les filtres
+              </button>
+            </div>
+
+          </div>
+
+          <div id="nombreMembres" class="text-sm font-semibold text-slate-700 bg-white rounded-lg px-4 py-2 border border-stone-200 inline-block">
+            Chargement des membres...
+          </div>
+
+        </div>
+
+        <!-- TABLE DES MEMBRES -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm">
+
+          <div class="mb-4">
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Liste</span>
+            <h3 class="text-lg font-bold text-slate-800">Tous les membres</h3>
+          </div>
+
+          <div class="overflow-x-auto bg-white rounded-xl border border-stone-200">
+
+            <table class="w-full text-sm text-left">
+
+              <thead class="bg-[#e8e2d5] text-slate-700 uppercase text-xs">
+                <tr>
+                  <th class="px-4 py-3">ID</th>
+                  <th class="px-4 py-3">Nom complet</th>
+                  <th class="px-4 py-3">Téléphone</th>
+                  <th class="px-4 py-3">Courriel</th>
+                  <th class="px-4 py-3">Secteur</th>
+                  <th class="px-4 py-3">Département</th>
+                  <th class="px-4 py-3">Fonction</th>
+                </tr>
+              </thead>
+
+              <tbody id="membersTableBody">
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+        <footer class="text-center text-xs text-slate-500 pt-4">
+          <p>Église Vases d'Honneur de Jonquière</p>
+          <p>Que Dieu vous bénisse abondamment 🤍</p>
+        </footer>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script src="membres.js"></script>
+
+  <script>
+    document.getElementById("btnDeconnexion").addEventListener("click", async () => {
+      const response = await fetch("/api/deconnexion", { method: "POST" });
+      if (response.ok) window.location.href = "/connexion.html";
+    });
+  </script>
+
+</body>
+</html>

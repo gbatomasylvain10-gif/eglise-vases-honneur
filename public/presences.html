@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-[#f8f6f0]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Présences — Église Vases d'Honneur</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ===== Cercle de progression ===== */
+    .stats-container { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: center; }
+    .progress-circle-container { display: flex; align-items: center; justify-content: center; padding: 10px; }
+    .progress-circle { position: relative; width: 190px; height: 190px; }
+    .progress-circle svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+    .progress-circle-bg { fill: none; stroke: #e7e5e4; stroke-width: 15; }
+    .progress-circle-bar { fill: none; stroke-width: 15; stroke-linecap: round;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1), stroke 0.5s ease; }
+    .progress-circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
+    .progress-circle-percentage { font-size: 42px; font-weight: 800; color: #1e293b; line-height: 1; }
+    .progress-circle-label { font-size: 13px; color: #64748b; margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+    .progress-low .progress-circle-bar { stroke: #ef4444; }
+    .progress-low .progress-circle-percentage { color: #ef4444; }
+    .progress-medium .progress-circle-bar { stroke: #f59e0b; }
+    .progress-medium .progress-circle-percentage { color: #f59e0b; }
+    .progress-good .progress-circle-bar { stroke: #eab308; }
+    .progress-good .progress-circle-percentage { color: #ca8a04; }
+    .progress-excellent .progress-circle-bar { stroke: #10b981; }
+    .progress-excellent .progress-circle-percentage { color: #10b981; }
+
+    /* ===== Cartes stats ===== */
+    .stats-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .stat-card-modern { background: white; border-radius: 16px; padding: 20px; border: 1px solid #e7e5e4; border-left-width: 4px; }
+    .stat-card-modern .stat-icon { font-size: 26px; margin-bottom: 8px; }
+    .stat-card-modern .stat-value { font-size: 26px; font-weight: 800; color: #1e293b; }
+    .stat-card-modern .stat-label { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-card-modern.present { border-left-color: #10b981; }
+    .stat-card-modern.absent { border-left-color: #ef4444; }
+    .stat-card-modern.total { border-left-color: #0ea5e9; }
+    .stat-card-modern.rate { border-left-color: #8b5cf6; }
+
+    /* ===== Grille membres ===== */
+    .members-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
+    .member-card { background: white; border-radius: 12px; padding: 16px; border: 2px solid #e7e5e4;
+      display: flex; align-items: center; gap: 12px; cursor: pointer; position: relative; overflow: hidden; transition: all 0.3s ease; }
+    .member-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+    .member-card.present { background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%); border-color: #10b981; }
+    .member-card.present::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #10b981; }
+    .member-card.absent { opacity: 0.75; }
+    .member-card.absent:hover { opacity: 1; }
+    .member-avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 17px; font-weight: 700; color: white; flex-shrink: 0; }
+    .member-avatar.present { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important; }
+    .member-info { flex: 1; min-width: 0; }
+    .member-name { font-size: 14px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .member-details { font-size: 11px; color: #64748b; display: flex; gap: 6px; flex-wrap: wrap; margin-top: 3px; }
+    .member-detail-badge { background: #f1f5f9; padding: 2px 8px; border-radius: 10px; }
+    .member-card.present .member-detail-badge { background: #d1fae5; color: #065f46; }
+
+    /* ===== Toggle switch ===== */
+    .toggle-switch { position: relative; width: 50px; height: 26px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.4s; }
+    .toggle-slider:before { content: ""; position: absolute; height: 20px; width: 20px; left: 3px; bottom: 3px;
+      background: white; border-radius: 50%; transition: 0.4s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    input:checked + .toggle-slider { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+    input:checked + .toggle-slider:before { transform: translateX(24px); }
+
+    /* ===== Boutons ===== */
+    .action-buttons-modern { display: flex; gap: 12px; margin: 15px 0; flex-wrap: wrap; }
+    .btn-action-modern { padding: 10px 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+    .btn-action-modern:hover { transform: translateY(-2px); }
+    .btn-check-all { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+    .btn-uncheck-all { background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%); color: white; }
+    .btn-save { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; font-size: 16px; }
+
+    .search-members input { width: 100%; padding: 12px 20px; border: 2px solid #e7e5e4; border-radius: 10px; font-size: 14px; }
+    .search-members input:focus { outline: none; border-color: #0d9488; }
+
+    @media (max-width: 768px) {
+      .stats-container { grid-template-columns: 1fr; }
+      .members-grid { grid-template-columns: 1fr; }
+      .progress-circle { width: 160px; height: 160px; }
+      .progress-circle-percentage { font-size: 34px; }
+    }
+  </style>
+</head>
+<body class="h-full text-slate-800 antialiased font-sans">
+
+  <div class="min-h-full flex">
+
+    <!-- BARRE LATÉRALE -->
+        <!-- BARRE LATÉRALE (Navigation garantie et prioritaire) -->
+    <aside class="w-64 bg-[#2b2d32] text-slate-300 flex-col shrink-0 min-h-screen hidden md:flex relative z-50">
+
+      <div class="p-6 text-center border-b border-slate-700/50">
+        <div class="text-amber-500 text-2xl font-serif mb-1">✝</div>
+        <h2 class="text-sm font-semibold tracking-wider text-slate-100 uppercase">Vases d'Honneur</h2>
+        <p class="text-xs text-slate-400">Jonquière</p>
+      </div>
+
+      <nav class="flex-1 px-4 py-6 space-y-1 text-sm font-medium">
+
+        <a href="/admin.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🏠</span><span>Tableau de Bord</span>
+        </a>
+
+        <a href="/membres.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>👥</span><span>Membres</span>
+        </a>
+
+        <a href="/presences.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🙏</span><span>Suivi Pastoral</span>
+        </a>
+
+        <a href="/evangelisation.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>📢</span><span>Évangélisation</span>
+        </a>
+
+        <a href="/lifts.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🚐</span><span>Transport/Lifts</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🏛️</span><span>Départements</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>📅</span><span>Événements</span>
+        </a>
+
+      </nav>
+
+      <div class="p-4 border-t border-slate-700/50">
+        <button id="btnDeconnexion" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition text-sm font-medium">
+          <span>🚪</span><span>Déconnexion</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- CONTENU -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+            <header class="px-8 py-6 max-w-6xl mx-auto w-full">
+        <h1 class="text-xl font-bold text-slate-900"> Suivi Pastoral — Présences</h1>
+        <p class="text-sm text-slate-600">Enregistrez les présences après chaque culte</p>
+      </header>
+
+            <main class="px-8 pb-10 space-y-6 max-w-6xl mx-auto w-full">
+
+        <!-- CRÉER UN CULTE -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm space-y-4">
+
+          <div>
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Section 01</span>
+            <h3 class="text-lg font-bold text-slate-800">📅 Créer un nouveau culte</h3>
+            <p class="text-xs text-slate-500">Ajoutez un culte avant d'enregistrer les présences.</p>
+          </div>
+
+          <form id="formNouveauCulte" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <div>
+              <label class="text-xs font-semibold text-slate-700 mb-1 block">Date du culte <span class="text-red-500">*</span></label>
+              <input type="date" id="dateCulte" name="dateCulte" required
+                class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition">
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-700 mb-1 block">Type de culte <span class="text-red-500">*</span></label>
+              <select id="typeCulte" name="typeCulte"
+                class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition">
+                <option value="Culte dominical">Culte dominical</option>
+                <option value="Veillée">Veillée</option>
+                <option value="Réunion">Réunion</option>
+                <option value="Événement spécial">Événement spécial</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="text-xs font-semibold text-slate-700 mb-1 block">Notes (optionnel)</label>
+              <textarea id="notesCulte" name="notesCulte" rows="2" placeholder="Ex : Culte spécial de Pâques"
+                class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+              <button type="submit"
+                class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-lg transition shadow-sm">
+                ➕ Créer le culte
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+        <!-- SÉLECTIONNER UN CULTE -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm space-y-4">
+
+          <div>
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Section 02</span>
+            <h3 class="text-lg font-bold text-slate-800">📋 Sélectionner un culte</h3>
+            <p class="text-xs text-slate-500">Choisissez le culte pour lequel enregistrer les présences.</p>
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-slate-700 mb-1 block">Culte sélectionné</label>
+            <select id="selectCulte"
+              class="w-full px-4 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition">
+              <option value="">-- Sélectionnez un culte --</option>
+            </select>
+          </div>
+
+          <div id="infoCulte" style="display: none;">
+            <div class="p-4 bg-white rounded-xl border border-stone-200 text-sm space-y-1">
+              <p><strong>Date :</strong> <span id="infoDate"></span></p>
+              <p><strong>Type :</strong> <span id="infoType"></span></p>
+              <p><strong>Notes :</strong> <span id="infoNotes"></span></p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ENREGISTRER LES PRÉSENCES -->
+        <div class="bg-[#f0ebe1] p-6 rounded-2xl border border-stone-200/60 shadow-sm" id="sectionPresences" style="display: none;">
+
+          <div class="mb-4">
+            <span class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Section 03</span>
+            <h3 class="text-lg font-bold text-slate-800">👥 Enregistrer les présences</h3>
+            <p class="text-xs text-slate-500">Cochez les membres présents au culte.</p>
+          </div>
+
+          <!-- STATS VISUELLES -->
+          <div class="stats-container">
+
+            <div class="progress-circle-container">
+              <div class="progress-circle progress-low" id="progressCircle">
+                <svg viewBox="0 0 200 200">
+                  <circle class="progress-circle-bg" cx="100" cy="100" r="85"></circle>
+                  <circle class="progress-circle-bar" cx="100" cy="100" r="85"
+                    stroke-dasharray="534" stroke-dashoffset="534" id="progressBar"></circle>
+                </svg>
+                <div class="progress-circle-text">
+                  <div class="progress-circle-percentage" id="statTauxCircle">0%</div>
+                  <div class="progress-circle-label">Présence</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-cards">
+              <div class="stat-card-modern present">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="statPresents">0</div>
+                <div class="stat-label">Présents</div>
+              </div>
+              <div class="stat-card-modern absent">
+                <div class="stat-icon">❌</div>
+                <div class="stat-value" id="statAbsents">0</div>
+                <div class="stat-label">Absents</div>
+              </div>
+              <div class="stat-card-modern total">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value" id="statTotal">0</div>
+                <div class="stat-label">Total</div>
+              </div>
+              <div class="stat-card-modern rate">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="statTauxText">0%</div>
+                <div class="stat-label">Taux</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- BOUTONS -->
+          <div class="action-buttons-modern">
+            <button type="button" id="btnCocherTous" class="btn-action-modern btn-check-all">✅ Cocher tous</button>
+            <button type="button" id="btnDecocherTous" class="btn-action-modern btn-uncheck-all">❌ Décocher tous</button>
+          </div>
+
+          <!-- RECHERCHE -->
+          <div class="search-members">
+            <input type="text" id="searchMembers" placeholder="🔎 Rechercher un membre...">
+          </div>
+
+          <!-- LISTE -->
+          <div class="members-grid" id="listeMembres"></div>
+
+          <!-- ENREGISTRER -->
+          <div class="text-center mt-6">
+            <button type="button" id="btnEnregistrerPresences" class="btn-action-modern btn-save">💾 Enregistrer les présences</button>
+          </div>
+
+        </div>
+
+        <footer class="text-center text-xs text-slate-500 pt-4">
+          <p>Église Vases d'Honneur de Jonquière</p>
+          <p>Que Dieu vous bénisse abondamment 🤍</p>
+        </footer>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script src="presences.js"></script>
+
+  <script>
+    document.getElementById("btnDeconnexion").addEventListener("click", async () => {
+      const response = await fetch("/api/deconnexion", { method: "POST" });
+      if (response.ok) window.location.href = "/connexion.html";
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Dépendances Node.js
+node_modules/
+
+# Fichiers de configuration secrets (TRÈS IMPORTANT)
+.env
+
+# Base de données SQLite (on ne l'utilise plus, mais on l'ignore au cas où)
+*.db
+*.sqlite
+
+# Fichiers système
+.DS_Store
+Thumbs.db

@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Inscription en ligne — Église Vases d'Honneur de Jonquière"
+    >
+
+    <title>
+        Inscription — Église Vases d'Honneur
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <main class="page">
+
+
+        <!-- ============================================
+             EN-TÊTE
+        ============================================= -->
+
+        <header class="hero">
+
+            <div class="hero-content">
+
+                <div class="church-symbol">
+                    ✝
+                </div>
+
+                <p class="church-name">
+                    ÉGLISE VASES D'HONNEUR
+                </p>
+
+                <h1>
+                    JONQUIÈRE
+                </h1>
+
+                <div class="hero-line"></div>
+
+                <p class="hero-subtitle">
+                    Inscription en ligne
+                </p>
+
+                <p class="hero-description">
+                    Remplissez ce formulaire pour vous inscrire
+                    ou inscrire une nouvelle personne.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ============================================
+             BARRE DE PROGRESSION
+        ============================================= -->
+
+        <div class="progress-container">
+
+            <div class="progress-bar">
+
+                <div class="progress-step active" data-section="1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Identité</span>
+                </div>
+
+                <div class="progress-step" data-section="2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Coordonnées</span>
+                </div>
+
+                <div class="progress-step" data-section="3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Spirituel</span>
+                </div>
+
+                <div class="progress-step" data-section="4">
+                    <span class="step-number">4</span>
+                    <span class="step-label">Engagement</span>
+                </div>
+
+                <div class="progress-step" data-section="5">
+                    <span class="step-number">5</span>
+                    <span class="step-label">Urgence</span>
+                </div>
+
+                <div class="progress-step" data-section="6">
+                    <span class="step-number">6</span>
+                    <span class="step-label">Consentement</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ============================================
+             FORMULAIRE
+        ============================================= -->
+
+        <form id="inscriptionForm">
+
+
+            <!-- ========================================
+                 SECTION 1 — IDENTITÉ
+            ========================================= -->
+
+            <section class="form-section" id="section-1">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <span class="section-number">
+                            SECTION 01
+                        </span>
+
+                        <h2>
+                            Identité
+                        </h2>
+
+                        <p>
+                            Informations personnelles du membre.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fields-grid">
+
+
+                    <!-- Nom complet -->
+
+                    <div class="field field-full">
+
+                        <label for="nomComplet">
+                            Nom complet
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomComplet"
+                            name="nomComplet"
+                            required
+                            placeholder="Ex : Jean Tremblay"
+                        >
+
+                        <small class="field-help">
+                            Entrez votre prénom et nom de famille complets.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Date de naissance -->
+
+                    <div class="field">
+
+                        <label for="dateNaissance">
+                            Date de naissance
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dateNaissance"
+                            name="dateNaissance"
+                            required
+                            min="1900-01-01"
+                            max="9999-12-31"
+                        >
+
+                    </div>
+
+
+                    <!-- Sexe -->
+
+                    <div class="field">
+
+                        <label>
+                            Sexe
+                            <span class="required">*</span>
+                        </label>
+
+                        <div class="choice-group">
+
+                            <label class="choice-card">
+
+                                <input
+                                    type="radio"
+                                    name="sexe"
+                                    value="Homme"
+                                    required
+                                >
+
+                                <span>
+                                    👨 Homme
+                                </span>
+
+                            </label>
+
+
+                            <label class="choice-card">
+
+                                <input
+                                    type="radio"
+                                    name="sexe"
+                                    value="Femme"
+                                >
+
+                                <span>
+                                    👩 Femme
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Statut matrimonial -->
+
+                    <div class="field field-full">
+
+                        <label for="statutMatrimonial">
+                            Statut matrimonial
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="statutMatrimonial"
+                            name="statutMatrimonial"
+                            required
+                        >
+
+                            <option value="">
+                                Sélectionnez votre statut
+                            </option>
+
+                            <option value="Célibataire">
+                                Célibataire
+                            </option>
+
+                            <option value="Fiancé(e)">
+                                Fiancé(e)
+                            </option>
+
+                            <option value="Marié(e)">
+                                Marié(e)
+                            </option>
+
+                            <option value="Divorcé(e)">
+                                Divorcé(e)
+                            </option>
+
+                            <option value="Veuf(ve)">
+                                Veuf(ve)
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 SECTION 2 — COORDONNÉES
+            ========================================= -->
+
+            <section class="form-section" id="section-2">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        📍
+                    </div>
+
+                    <div>
+
+                        <span class="section-number">
+                            SECTION 02
+                        </span>
+
+                        <h2>
+                            Coordonnées
+                        </h2>
+
+                        <p>
+                            Informations permettant de vous contacter.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fields-grid">
+
+
+                    <!-- Adresse -->
+
+                    <div class="field field-full">
+
+                        <label for="adresse">
+                            Adresse complète
+                            <span class="required">*</span>
+                        </label>
+
+                        <textarea
+                            id="adresse"
+                            name="adresse"
+                            required
+                            rows="3"
+                            placeholder="Ex : 123 rue Principale, Jonquière, QC"
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- Secteur -->
+
+                    <div class="field">
+
+                        <label for="secteur">
+                            Secteur d'habitation
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="secteur"
+                            name="secteur"
+                            required
+                        >
+
+                            <option value="">
+                                Sélectionnez
+                            </option>
+
+                            <option value="Chicoutimi">
+                                Chicoutimi
+                            </option>
+
+                            <option value="Jonquière">
+                                Jonquière
+                            </option>
+
+                            <option value="Arvida">
+                                Arvida
+                            </option>
+
+                            <option value="Alma">
+                                Alma
+                            </option>
+
+                            <option value="Autre">
+                                Autre
+                            </option>
+
+                        </select>
+
+
+                        <input
+                            type="text"
+                            id="autreSecteur"
+                            name="autreSecteur"
+                            class="conditional-field"
+                            placeholder="Veuillez préciser votre secteur"
+                            style="display: none;"
+                        >
+
+                    </div>
+
+
+                    <!-- Transport -->
+
+                    <div class="field">
+
+                        <label>
+                            Moyen de transport actuel
+                            <span class="required">*</span>
+                        </label>
+
+                        <div class="choice-list">
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="transport"
+                                    value="Bus"
+                                    required
+                                >
+                                🚌 Bus
+                            </label>
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="transport"
+                                    value="Voiture"
+                                >
+                                🚗 Voiture
+                            </label>
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="transport"
+                                    value="À pied"
+                                >
+                                🚶 À pied
+                            </label>
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="transport"
+                                    value="Autre"
+                                >
+                                ✨ Autre
+                            </label>
+
+                        </div>
+
+
+                        <input
+                            type="text"
+                            id="autreTransport"
+                            name="autreTransport"
+                            class="conditional-field"
+                            placeholder="Veuillez préciser votre moyen de transport"
+                            style="display: none;"
+                        >
+
+                    </div>
+
+
+                    <!-- Téléphone -->
+
+                    <div class="field">
+
+                        <label for="telephone">
+                            Téléphone mobile
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="telephone"
+                            name="telephone"
+                            required
+                            maxlength="10"
+                            inputmode="numeric"
+                            pattern="[0-9]{10}"
+                            placeholder="Ex : 4181234567 (10 chiffres)"
+                        >
+
+                        <small class="field-help">
+                            Format : 10 chiffres sans espaces ni tirets.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Courriel -->
+
+                    <div class="field">
+
+                        <label for="courriel">
+                            Courriel
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="courriel"
+                            name="courriel"
+                            required
+                            placeholder="votre@email.com"
+                        >
+
+                        <small class="field-help">
+                            Nous utiliserons cette adresse pour vous contacter.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 SECTION 3 — PARCOURS SPIRITUEL
+            ========================================= -->
+
+            <section class="form-section" id="section-3">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        ✝️
+                    </div>
+
+                    <div>
+
+                        <span class="section-number">
+                            SECTION 03
+                        </span>
+
+                        <h2>
+                            Parcours spirituel
+                        </h2>
+
+                        <p>
+                            Parcours et informations spirituelles.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fields-grid">
+
+
+                    <!-- Date de conversion -->
+
+                    <div class="field">
+
+                        <label for="dateConversion">
+                            Date de conversion
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dateConversion"
+                            name="dateConversion"
+                            min="1900-01-01"
+                            max="9999-12-31"
+                        >
+
+                        <small class="field-help">
+                            Date à laquelle vous avez accepté Jésus-Christ.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Baptisé par immersion -->
+
+                    <div class="field">
+
+                        <label>
+                            Êtes-vous baptisé par immersion ?
+                            <span class="required">*</span>
+                        </label>
+
+                        <div class="choice-group">
+
+                            <label class="choice-card">
+
+                                <input
+                                    type="radio"
+                                    name="baptise"
+                                    value="Oui"
+                                    required
+                                >
+
+                                <span>
+                                    ✅ Oui
+                                </span>
+
+                            </label>
+
+
+                            <label class="choice-card">
+
+                                <input
+                                    type="radio"
+                                    name="baptise"
+                                    value="Non"
+                                >
+
+                                <span>
+                                    ❌ Non
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Date du baptême (cachée par défaut) -->
+
+                    <div class="field conditional-bapteme" style="display: none;">
+
+                        <label for="dateBapteme">
+                            Date du baptême d'eau
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dateBapteme"
+                            name="dateBapteme"
+                            min="1900-01-01"
+                            max="9999-12-31"
+                        >
+
+                    </div>
+
+
+                    <!-- Église d'origine -->
+
+                    <div class="field field-full">
+
+                        <label for="egliseOrigine">
+                            Église d'origine
+                        </label>
+
+                        <textarea
+                            id="egliseOrigine"
+                            name="egliseOrigine"
+                            rows="2"
+                            placeholder="Nom de votre église précédente (si applicable)"
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- Date d'arrivée -->
+
+                    <div class="field">
+
+                        <label for="dateArrivee">
+                            Période d'arrivée à l'Église
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="dateArrivee"
+                            name="dateArrivee"
+                            required
+                            maxlength="20"
+                            placeholder="Ex : janvier 2024"
+                        >
+
+                        <small class="field-help">
+                            Format : mois + année (ex : octobre 2015)
+                        </small>
+
+                    </div>
+
+
+                    <!-- Fonction -->
+
+                    <div class="field">
+
+                        <label for="fonction">
+                            Fonction actuelle
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="fonction"
+                            name="fonction"
+                            required
+                        >
+
+                            <option value="">
+                                Sélectionnez
+                            </option>
+
+                            <option value="Membre">
+                                Membre
+                            </option>
+
+                            <option value="AP">
+                                AP (Ancien / Participant actif)
+                            </option>
+
+                            <option value="Responsable de louange">
+                                Responsable de louange
+                            </option>
+
+                            <option value="Responsable de la COM">
+                                Responsable de la COM
+                            </option>
+
+                            <option value="Responsable de l'accueil">
+                                Responsable de l'accueil
+                            </option>
+
+                            <option value="Les Boss">
+                                Les Boss
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 SECTION 4 — DONS ET DISPONIBILITÉS
+            ========================================= -->
+
+            <section class="form-section" id="section-4">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🤝
+                    </div>
+
+                    <div>
+
+                        <span class="section-number">
+                            SECTION 04
+                        </span>
+
+                        <h2>
+                            Dons, disponibilités et engagement
+                        </h2>
+
+                        <p>
+                            Informations concernant le service.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DONS -->
+
+                <div class="field field-full">
+
+                    <label>
+                        Dons / talents
+                    </label>
+
+                    <div class="tag-grid">
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Musique">
+                            <span>🎵 Musique</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Accueil">
+                            <span>👋 Accueil</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Intercession">
+                            <span>🙏 Intercession</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Enfants">
+                            <span>👶 Enfants</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Média">
+                            <span>🎥 Média</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Évangélisation">
+                            <span>📢 Évangélisation</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Hospitalité">
+                            <span>🏠 Hospitalité</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Administration">
+                            <span>📋 Administration</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Guitare">
+                            <span>🎸 Guitare</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Clavier">
+                            <span>🎹 Clavier</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Chant">
+                            <span>🎤 Chant</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="dons" value="Autre">
+                            <span>✨ Autre</span>
+                        </label>
+
+                    </div>
+
+                    <small class="field-help">
+                        Cochez tous les dons ou talents que vous possédez.
+                    </small>
+
+                </div>
+
+
+                <!-- DISPONIBILITÉS -->
+
+                <div class="field field-full">
+
+                    <label>
+                        Jours de disponibilité
+                    </label>
+
+                    <div class="tag-grid">
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="disponibilites" value="Lundi">
+                            <span>Lundi</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="disponibilites" value="Mardi">
+                            <span>Mardi</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="disponibilites" value="Mercredi">
+                            <span>Mercredi</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="disponibilites" value="Jeudi">
+                            <span>Jeudi</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="disponibilites" value="Vendredi">
+                            <span>Vendredi</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="disponibilites" value="Samedi">
+                            <span>Samedi</span>
+                        </label>
+
+                        <label class="tag-option">
+                            <input type="checkbox" name="disponibilites" value="Dimanche">
+                            <span>Dimanche</span>
+                        </label>
+
+                    </div>
+
+                    <small class="field-help">
+                        Indiquez les jours où vous êtes disponible pour servir.
+                    </small>
+
+                </div>
+
+
+                <!-- SERVEZ-VOUS DANS UN DÉPARTEMENT -->
+
+                <div class="field field-full">
+
+                    <label>
+                        Servez-vous dans un département à l'Église ?
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="choice-group">
+
+                        <label class="choice-card">
+
+                            <input
+                                type="radio"
+                                name="sertDepartement"
+                                value="Oui"
+                                required
+                            >
+
+                            <span>
+                                ✅ Oui
+                            </span>
+
+                        </label>
+
+
+                        <label class="choice-card">
+
+                            <input
+                                type="radio"
+                                name="sertDepartement"
+                                value="Non"
+                            >
+
+                            <span>
+                                ❌ Non
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DÉPARTEMENT ACTUEL -->
+
+                <div class="field field-full conditional-departement" style="display: none;">
+
+                    <label for="departementService">
+                        Dans quel département servez-vous ?
+                    </label>
+
+                    <select
+                        id="departementService"
+                        name="departementService"
+                    >
+
+                        <option value="">
+                            Aucun département
+                        </option>
+
+                        <option value="La COM">
+                            📸 La COM
+                        </option>
+
+                        <option value="La chorale">
+                            🎶 La chorale
+                        </option>
+
+                        <option value="L'accueil">
+                            👋 L'accueil
+                        </option>
+
+                        <option value="L'administration">
+                            📋 L'administration
+                        </option>
+
+                        <option value="Les enfants">
+                            👶 Les enfants
+                        </option>
+
+                        <option value="L'intercession">
+                            🙏 L'intercession
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SECTION INTÉGRATION DÉPARTEMENT (masquée si la personne sert déjà) -->
+
+<div class="section-integration-departement">
+
+
+    <!-- VEUT INTÉGRER UN DÉPARTEMENT -->
+
+    <div class="field field-full">
+
+        <label>
+            Voulez-vous intégrer un département de l'Église ?
+        </label>
+
+        <div class="choice-group">
+
+            <label class="choice-card">
+
+                <input
+                    type="radio"
+                    name="veutDepartement"
+                    value="Oui"
+                >
+
+                <span>
+                    ✅ Oui
+                </span>
+
+            </label>
+
+
+            <label class="choice-card">
+
+                <input
+                    type="radio"
+                    name="veutDepartement"
+                    value="Non"
+                >
+
+                <span>
+                    ❌ Non
+                </span>
+
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- DÉPARTEMENT SOUHAITÉ -->
+
+    <div class="field field-full conditional-departement-souhaite" style="display: none;">
+
+        <label for="departementSouhaite">
+            Quel département souhaitez-vous intégrer ?
+        </label>
+
+        <select
+            id="departementSouhaite"
+            name="departementSouhaite"
+        >
+
+            <option value="">
+                Aucun département
+            </option>
+
+            <option value="La COM">
+                📸 La COM
+            </option>
+
+            <option value="La chorale">
+                🎶 La chorale
+            </option>
+
+            <option value="L'accueil">
+                👋 L'accueil
+            </option>
+
+            <option value="L'administration">
+                📋 L'administration
+            </option>
+
+            <option value="Les enfants">
+                👶 Les enfants
+            </option>
+
+            <option value="L'intercession">
+                🙏 L'intercession
+            </option>
+
+        </select>
+
+    </div>
+
+
+</div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 SECTION 5 — CONTACT D'URGENCE
+            ========================================= -->
+
+            <section class="form-section" id="section-5">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🚨
+                    </div>
+
+                    <div>
+
+                        <span class="section-number">
+                            SECTION 05
+                        </span>
+
+                        <h2>
+                            Contact d'urgence
+                        </h2>
+
+                        <p>
+                            Personne à contacter en cas de besoin.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fields-grid">
+
+
+                    <!-- Nom du contact -->
+
+                    <div class="field">
+
+                        <label for="contactUrgence">
+                            Nom du contact
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="contactUrgence"
+                            name="contactUrgence"
+                            required
+                            placeholder="Nom complet"
+                        >
+
+                    </div>
+
+
+                    <!-- Lien de parenté -->
+
+                    <div class="field">
+
+                        <label for="lienParente">
+                            Lien de parenté
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lienParente"
+                            name="lienParente"
+                            required
+                            placeholder="Ex : frère, mère, ami"
+                        >
+
+                    </div>
+
+
+                    <!-- Téléphone du contact -->
+
+                    <div class="field">
+
+                        <label for="telephoneUrgence">
+                            Téléphone du contact
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="telephoneUrgence"
+                            name="telephoneUrgence"
+                            required
+                            maxlength="10"
+                            inputmode="numeric"
+                            pattern="[0-9]{10}"
+                            placeholder="Ex : 4181234567 (10 chiffres)"
+                        >
+
+                        <small class="field-help">
+                            Format : 10 chiffres sans espaces ni tirets.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 SECTION 6 — CONSENTEMENT
+            ========================================= -->
+
+            <section class="form-section consent-section" id="section-6">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🔐
+                    </div>
+
+                    <div>
+
+                        <span class="section-number">
+                            SECTION 06
+                        </span>
+
+                        <h2>
+                            Consentement
+                        </h2>
+
+                        <p>
+                            Protection des renseignements personnels.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label class="consent-box">
+
+                    <input
+                        type="checkbox"
+                        id="consentement"
+                        name="consentement"
+                        required
+                    >
+
+                    <span>
+                        J'accepte que mes renseignements personnels
+                        soient collectés et conservés par l'Église
+                        Vases d'Honneur de Jonquière conformément
+                        aux exigences applicables au Québec (Loi 25).
+                    </span>
+
+                </label>
+
+
+                <div class="field consent-date">
+
+                    <label for="dateConsentement">
+                        Date du consentement
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dateConsentement"
+                        name="dateConsentement"
+                        required
+                        min="1900-01-01"
+                        max="9999-12-31"
+                    >
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 BOUTONS
+            ========================================= -->
+
+            <div class="submit-area">
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+                    ✅ Valider mon inscription
+                </button>
+
+                <a
+                    href="/admin.html"
+                    class="submit-button"
+                >
+                    ← Retour
+                </a>
+
+            </div>
+
+
+        </form>
+
+
+
+        <!-- ============================================
+             PIED DE PAGE
+        ============================================= -->
+
+        <footer>
+
+            <p>
+                Église Vases d'Honneur de Jonquière
+            </p>
+
+            <p>
+                Que Dieu vous bénisse abondamment 🤍
+            </p>
+
+        </footer>
+
+
+    </main>
+
+
+    <script src="inscription.js"></script>
+
+</body>
+
+</html>
