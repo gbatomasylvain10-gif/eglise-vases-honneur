@@ -11,14 +11,30 @@ console.log("🚀 Script admin.js chargé");
 document.addEventListener("DOMContentLoaded", function () {
     console.log("📄 DOM chargé");
 
-    // 1. Gestion du menu mobile (Hamburger)
-    const btnMenuMobile = document.getElementById('btnMenuMobile');
-    const menuMobile = document.getElementById('menuMobile');
-    if (btnMenuMobile && menuMobile) {
-        btnMenuMobile.addEventListener('click', () => {
-            menuMobile.classList.toggle('hidden');
-        });
-    }
+    // 1. Gestion du menu mobile (Bouton Hamburger)
+    const btnHamburger = document.getElementById('btnHamburger');
+    const sidebarMenu = document.getElementById('sidebarMenu');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    const toggleMenu = () => {
+        const isClosed = sidebarMenu.classList.contains('-translate-x-full');
+        if (isClosed) {
+            // Ouvrir
+            sidebarMenu.classList.remove('-translate-x-full');
+            sidebarMenu.classList.add('translate-x-0');
+            sidebarOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            sidebarOverlay.classList.add('opacity-100');
+        } else {
+            // Fermer
+            sidebarMenu.classList.remove('translate-x-0');
+            sidebarMenu.classList.add('-translate-x-full');
+            sidebarOverlay.classList.remove('opacity-100');
+            sidebarOverlay.classList.add('opacity-0', 'pointer-events-none');
+        }
+    };
+
+    if (btnHamburger) btnHamburger.addEventListener('click', toggleMenu);
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', toggleMenu); // Fermer en cliquant à l'extérieur
 
     // 2. Gestion de la déconnexion (Desktop et Mobile)
     const btnDeconnexion = document.getElementById("btnDeconnexion");
@@ -196,7 +212,6 @@ async function chargerCategoriesIntelligentes() {
 
         const categories = result.categories;
 
-        // Mise à jour sécurisée des éléments DOM
         const updateElement = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
         const updateWidth = (id, value) => { const el = document.getElementById(id); if (el) el.style.width = value + "%"; };
 
@@ -319,7 +334,7 @@ async function chargerEvangelisation() {
         afficherMission(result.statistiques);
         console.log("✅ Statistiques d'évangélisation chargées");
     } catch (error) {
-        console.error("❌ Erreur évangélisation :", error);
+        console.error(" Erreur évangélisation :", error);
     }
 }
 
@@ -337,7 +352,7 @@ function afficherMission(stats) {
         { nom: "Rencontrée", emoji: "🤝", couleur: "slate" },
         { nom: "Contactée", emoji: "📞", couleur: "blue" },
         { nom: "Invitée", emoji: "💌", couleur: "purple" },
-        { nom: "Première visite", emoji: "🚪", couleur: "amber" },
+        { nom: "Première visite", emoji: "", couleur: "amber" },
         { nom: "En suivi", emoji: "❤️", couleur: "pink" },
         { nom: "Intégrée", emoji: "✅", couleur: "emerald" }
     ];
@@ -347,9 +362,6 @@ function afficherMission(stats) {
         const count = stats.parEtape[etape.nom] || 0;
         const pourcentage = stats.total > 0 ? Math.round((count / stats.total) * 100) : 0;
 
-        const card = document.createElement("div");
-        // Note: Tailwind n'interprète pas les classes dynamiques comme border-t-${couleur}-500 sans configuration, 
-        // on utilise donc des classes génériques sûres ou on mappe les couleurs.
         let borderColor = "border-t-slate-500";
         let textColor = "text-slate-600";
         if(etape.couleur === 'blue') { borderColor = "border-t-blue-500"; textColor = "text-blue-600"; }
@@ -358,6 +370,7 @@ function afficherMission(stats) {
         if(etape.couleur === 'pink') { borderColor = "border-t-pink-500"; textColor = "text-pink-600"; }
         if(etape.couleur === 'emerald') { borderColor = "border-t-emerald-500"; textColor = "text-emerald-600"; }
 
+        const card = document.createElement("div");
         card.className = `bg-white rounded-xl p-3 border border-stone-200 border-t-4 ${borderColor} text-center shadow-sm`;
         card.innerHTML = `
             <div class="text-xl mb-1">${etape.emoji}</div>
