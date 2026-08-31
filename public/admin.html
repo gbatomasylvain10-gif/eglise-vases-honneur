@@ -5,50 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Tableau de bord - Église Vases d'Honneur</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Animation fluide pour le menu latéral */
+    .sidebar-transition {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Zone de déclenchement invisible à gauche */
+    .hover-trigger {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      z-index: 50;
+      cursor: pointer;
+    }
+    
+    /* Le menu caché à gauche */
+    .sidebar-hidden {
+      transform: translateX(-100%);
+    }
+    
+    /* Le menu visible */
+    .sidebar-visible {
+      transform: translateX(0);
+    }
+    
+    /* Afficher le menu quand on survole la zone OU le menu lui-même */
+    .hover-trigger:hover ~ .sidebar-menu,
+    .sidebar-menu:hover {
+      transform: translateX(0);
+    }
+  </style>
 </head>
 <body class="h-full text-slate-800 antialiased font-sans">
 
   <div class="min-h-full flex flex-col md:flex-row">
 
     <!-- ============================================
-         MENU MOBILE (Visible uniquement sur mobile)
+         ZONE DE DÉCLENCHEMENT (Invisible à gauche)
     ============================================= -->
-    <div class="md:hidden bg-[#2b2d32] text-slate-300 px-4 py-3 flex items-center justify-between sticky top-0 z-50 shadow-md">
-      <div class="flex items-center gap-2">
-        <span class="text-amber-500 text-xl font-serif">✝</span>
-        <span class="font-semibold text-sm text-slate-100">Vases d'Honneur</span>
-      </div>
-      <button id="btnMenuMobile" class="p-2 rounded-lg bg-slate-700/50 hover:bg-slate-600 transition">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Menu Mobile Déroulant -->
-    <div id="menuMobile" class="hidden md:hidden bg-[#2b2d32] border-t border-slate-700/50 px-4 py-2 space-y-1 relative z-50">
-      <a href="/admin.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-[#3d5a45] text-white">
-        <span>🏠</span><span>Tableau de Bord</span>
-      </a>
-      <a href="/membres.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
-        <span>👥</span><span>Membres</span>
-      </a>
-      <a href="/presences.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
-        <span>🙏</span><span>Suivi Pastoral</span>
-      </a>
-      <a href="/evangelisation.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
-        <span>📢</span><span>Évangélisation</span>
-      </a>
-      <a href="/departements.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
-        <span>🏛️</span><span>Départements</span>
-      </a>
-      <button id="btnDeconnexionMobile" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition text-sm font-medium mt-2">
-        <span>🚪</span><span>Déconnexion</span>
-      </button>
-    </div>
+    <div class="hover-trigger md:hidden" title="Ouvrir le menu"></div>
 
     <!-- ============================================
-         BARRE LATÉRALE (Desktop uniquement)
+         MENU LATÉRAL GAUCHE (Mobile - Caché au départ)
+    ============================================= -->
+    <div id="sidebarMenu" class="sidebar-menu sidebar-hidden sidebar-transition fixed left-0 top-0 bottom-0 w-64 bg-[#2b2d32] text-slate-300 z-50 shadow-2xl md:hidden flex flex-col">
+      
+      <!-- Header du menu -->
+      <div class="p-6 text-center border-b border-slate-700/50 bg-[#25272c]">
+        <div class="text-amber-500 text-2xl font-serif mb-1">✝</div>
+        <h2 class="text-sm font-semibold tracking-wider text-slate-100 uppercase">Vases d'Honneur</h2>
+        <p class="text-xs text-slate-400">Jonquière</p>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 px-4 py-6 space-y-1 text-sm font-medium overflow-y-auto">
+        <a href="/admin.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-[#3d5a45] text-white shadow-sm">
+          <span></span><span>Tableau de Bord</span>
+        </a>
+        <a href="/membres.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>👥</span><span>Membres</span>
+        </a>
+        <a href="/presences.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>🙏</span><span>Suivi Pastoral</span>
+        </a>
+        <a href="/evangelisation.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>📢</span><span>Évangélisation</span>
+        </a>
+        <a href="/departements.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+          <span>️</span><span>Départements</span>
+        </a>
+      </nav>
+
+      <!-- Footer du menu -->
+      <div class="p-4 border-t border-slate-700/50 bg-[#25272c]">
+        <button id="btnDeconnexionMobile" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition text-sm font-medium">
+          <span>🚪</span><span>Déconnexion</span>
+        </button>
+      </div>
+
+      <!-- Indicateur visuel (petite flèche) -->
+      <div class="absolute -right-3 top-1/2 transform -translate-y-1/2">
+        <div class="bg-[#2b2d32] rounded-full p-1 shadow-lg">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay sombre quand le menu est ouvert (optionnel) -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 md:hidden opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <!-- ============================================
+         BARRE LATÉRALE (Desktop - Toujours visible)
     ============================================= -->
     <aside class="w-64 bg-[#2b2d32] text-slate-300 flex-col shrink-0 min-h-screen hidden md:flex relative z-40">
       <div class="p-6 text-center border-b border-slate-700/50">
@@ -72,9 +124,6 @@
         </a>
         <a href="/departements.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
           <span>🏛️</span><span>Départements</span>
-        </a>
-        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-500 cursor-not-allowed opacity-60">
-          <span>📅</span><span>Événements (Bientôt)</span>
         </a>
       </nav>
 
