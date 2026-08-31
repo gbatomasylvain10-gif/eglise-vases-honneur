@@ -7,7 +7,7 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
-const pool = require("./database/database.js"); // Import du pool PostgreSQL
+const pool = require("./database/database.js");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -252,10 +252,8 @@ app.get("/api/statistiques/presences", verifierConnexion, async (req, res) => {
   }
 });
 
-// (Note: Les statistiques catégories sont simplifiées ici pour la clarté, mais fonctionnent avec la même logique pool.query)
 app.get("/api/statistiques/categories", verifierConnexion, async (req, res) => {
   try {
-    // Version simplifiée pour PostgreSQL (le principe reste le même, on retourne des données valides)
     const membresRes = await pool.query("SELECT COUNT(*) as total FROM membres");
     const total = parseInt(membresRes.rows[0].total);
     res.json({
@@ -486,6 +484,154 @@ app.delete("/api/lifts/:id", verifierConnexion, async (req, res) => {
     res.json({ success: true, message: "Supprimé avec succès." });
   } catch (error) {
     res.status(500).json({ success: false, message: "Erreur suppression.", error: error.message });
+  }
+});
+
+// ============================================
+// DÉPARTEMENTS (ORDRE OPTIMISÉ)
+// ============================================
+
+// 1. Statistiques (SPÉCIFIQUE, doit être avant /:id)
+app.get("/api/departements/statistiques", verifierConnexion, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT d.id, d.nom, d.icone, d.couleur,
+             COUNT(md.id) as nombre_membres
+      FROM departements d
+      LEFT JOIN membres_departements md ON d.id = md.departement_id
+      GROUP BY d.id, d.nom, d.icone, d.couleur
+      ORDER BY nombre_membres DESC
+    `);
+    res.json({ success: true, statistiques: result.rows });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Impossible de récupérer les statistiques.", error: error.message });
+  }
+});
+
+// 2. Lister tous les départements
+app.get("/api/departements", verifierConnexion, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT d.*, m.nom_complet as responsable_nom
+      FROM departements d
+      LEFT JOIN membres m ON d.responsable_id = m.id
+      ORDER BY d.nom ASC
+    `);
+    res.json({ success: true, departements: result.rows });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Impossible de récupérer les départements.", error: error.message });
+  }
+});
+
+// 3. Créer un département
+app.post("/api/departements", verifierConnexion, async (req, res) => {
+  try {
+    const { nom, description, responsable_id, couleur, icone } = req.body;
+    if (!nom || nom.trim() === "") {
+      return res.status(400).json({ success: false, message: "Le nom est obligatoire." });
+    }
+
+    const result = await pool.query(
+      `INSERT INTO departements (nom, description, responsable_id, couleur, icone) 
+       VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+      [nom.trim(), description || null, responsable_id || null, couleur || '#3b82f6', icone || '🏛️']
+    );
+    res.status(201).json({ success: true, message: "Département créé avec succès.", id: result.rows[0].id });
+  } catch (error) {
+    if (error.code === '23505') {
+      return res.status(400).json({ success: false, message: "Ce département existe déjà." });
+    }
+    res.status(500).json({ success: false, message: "Impossible de créer le département.", error: error.message });
+  }
+});
+
+// 4. Détails d'un département
+app.get("/api/departements/:id", verifierConnexion, async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM departements WHERE id = $1", [Number(req.params.id)]);
+    if (result.rows.length === 0) return res.status(404).json({ success: false, message: "Département introuvable." });
+    res.json({ success: true, departement: result.rows[0] });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Impossible de récupérer le département.", error: error.message });
+  }
+});
+
+// 5. Modifier un département
+app.put("/api/departements/:id", verifierConnexion, async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const { nom, description, responsable_id, couleur, icone } = req.body;
+
+    await pool.query(
+      `UPDATE departements SET nom = $1, description = $2, responsable_id = $3, couleur = $4, icone = $5 WHERE id = $6`,
+      [nom, description || null, responsable_id || null, couleur, icone, id]
+    );
+    res.json({ success: true, message: "Département modifié avec succès." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Impossible de modifier le département.", error: error.message });
+  }
+});
+
+// 6. Supprimer un département
+app.delete("/api/departements/:id", verifierConnexion, async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    await pool.query("DELETE FROM departements WHERE id = $1", [id]);
+    res.json({ success: true, message: "Département supprimé avec succès." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Impossible de supprimer le département.", error: error.message });
+  }
+});
+
+// 7. Lister les membres d'un département
+app.get("/api/departements/:id/membres", verifierConnexion, async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const result = await pool.query(
+      `SELECT md.*, m.nom_complet, m.telephone, m.courriel, m.secteur
+       FROM membres_departements md
+       JOIN membres m ON md.membre_id = m.id
+       WHERE md.departement_id = $1
+       ORDER BY m.nom_complet ASC`,
+      [id]
+    );
+    res.json({ success: true, membres: result.rows });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Impossible de récupérer les membres.", error: error.message });
+  }
+});
+
+// 8. Assigner un membre à un département
+app.post("/api/departements/:id/membres", verifierConnexion, async (req, res) => {
+  try {
+    const departement_id = Number(req.params.id);
+    const { membre_id, role } = req.body;
+
+    await pool.query(
+      `INSERT INTO membres_departements (membre_id, departement_id, role) 
+       VALUES ($1, $2, $3)
+       ON CONFLICT (membre_id, departement_id) DO UPDATE SET role = EXCLUDED.role`,
+      [membre_id, departement_id, role || 'Membre']
+    );
+    res.json({ success: true, message: "Membre assigné au département." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Impossible d'assigner le membre.", error: error.message });
+  }
+});
+
+// 9. Retirer un membre d'un département
+app.delete("/api/departements/:id/membres/:membreId", verifierConnexion, async (req, res) => {
+  try {
+    const departement_id = Number(req.params.id);
+    const membre_id = Number(req.params.membreId);
+
+    await pool.query(
+      "DELETE FROM membres_departements WHERE departement_id = $1 AND membre_id = $2",
+      [departement_id, membre_id]
+    );
+    res.json({ success: true, message: "Membre retiré du département." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Impossible de retirer le membre.", error: error.message });
   }
 });
 

@@ -5,6 +5,7 @@
 
 require('dotenv').config();
 const { Pool } = require('pg');
+const bcrypt = require('bcrypt'); // Ajout pour hasher le mot de passe admin
 
 // ============================================
 // CONNEXION À LA BASE (Neon.tech)
@@ -18,7 +19,7 @@ const pool = new Pool({
 });
 
 // ============================================
-// CRÉATION DES TABLES (Au démarrage du serveur)
+// CRÉATION DES TABLES ET DONNÉES PAR DÉFAUT
 // ============================================
 
 async function initialiserBaseDeDonnees() {
@@ -147,6 +148,46 @@ async function initialiserBaseDeDonnees() {
       )
     `);
 
+    // Table Départements
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS departements (
+        id SERIAL PRIMARY KEY,
+        nom TEXT NOT NULL UNIQUE,
+        description TEXT,
+        responsable_id INTEGER REFERENCES membres(id),
+        couleur TEXT DEFAULT '#3b82f6',
+        icone TEXT DEFAULT '🏛️',
+        date_creation TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Table Membres-Départements
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS membres_departements (
+        id SERIAL PRIMARY KEY,
+        membre_id INTEGER NOT NULL REFERENCES membres(id) ON DELETE CASCADE,
+        departement_id INTEGER NOT NULL REFERENCES departements(id) ON DELETE CASCADE,
+        role TEXT DEFAULT 'Membre',
+        date_assignation TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(membre_id, departement_id)
+      )
+    `);
+
+    // ==========================================
+    // CRÉATION D'UN ADMINISTRATEUR PAR DÉFAUT (Si la base est vide)
+    // ==========================================
+    const usersCheck = await client.query("SELECT COUNT(*) as count FROM utilisateurs");
+    if (parseInt(usersCheck.rows[0].count) === 0) {
+      const hashedPassword = await bcrypt.hash("Admin123!", 10);
+      await client.query(`
+        INSERT INTO utilisateurs (nom_complet, courriel, mot_de_passe, role, actif)
+        VALUES ('Administrateur Principal', 'admin@eglise-vases-honneur.ca', $1, 'Administrateur', 1)
+      `, [hashedPassword]);
+      console.log("✅ Utilisateur administrateur par défaut créé !");
+      console.log("   👤 Courriel : admin@eglise-vases-honneur.ca");
+      console.log("   🔑 Mot de passe : Admin123!");
+    }
+
     client.release();
     console.log("✅ Tables créées/vérifiées avec succès");
   } catch (error) {
@@ -158,6 +199,6 @@ async function initialiserBaseDeDonnees() {
 initialiserBaseDeDonnees();
 
 // ============================================
-// EXPORT (On exporte le 'pool' au lieu de 'db')
+// EXPORT
 // ============================================
 module.exports = pool;
