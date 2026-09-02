@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // INJECTER LE MENU MOBILE (Hamburger)
 // ============================================
 function injecterMenuMobile() {
-    // Créer le bouton hamburger
     const btnHamburger = document.createElement('button');
     btnHamburger.id = 'btnHamburger';
     btnHamburger.className = 'fixed top-4 left-4 z-50 md:hidden bg-[#2b2d32] text-amber-500 w-14 h-14 flex items-center justify-center rounded-2xl shadow-2xl border border-slate-700 active:scale-95 transition-transform';
@@ -34,13 +33,11 @@ function injecterMenuMobile() {
     `;
     document.body.appendChild(btnHamburger);
 
-    // Créer l'overlay sombre
     const overlay = document.createElement('div');
     overlay.id = 'sidebarOverlay';
     overlay.className = 'fixed inset-0 bg-black/60 z-[55] md:hidden opacity-0 pointer-events-none transition-opacity duration-300';
     document.body.appendChild(overlay);
 
-    // Créer le menu latéral mobile
     const sidebarMenu = document.createElement('div');
     sidebarMenu.id = 'sidebarMenu';
     sidebarMenu.className = 'fixed left-0 top-0 bottom-0 w-72 bg-[#2b2d32] text-slate-300 z-[60] shadow-2xl md:hidden flex flex-col transform -translate-x-full transition-transform duration-300 ease-in-out';
@@ -58,10 +55,13 @@ function injecterMenuMobile() {
                 <span>👥</span><span>Membres</span>
             </a>
             <a href="/presences.html" class="nav-link flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
-                <span></span><span>Suivi Pastoral</span>
+                <span>🙏</span><span>Suivi Pastoral</span>
             </a>
             <a href="/evangelisation.html" class="nav-link flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
-                <span></span><span>Évangélisation</span>
+                <span>📢</span><span>Évangélisation</span>
+            </a>
+            <a href="/lifts.html" class="nav-link flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+                <span>🚐</span><span>Transport/Lifts</span>
             </a>
             <a href="/departements.html" class="nav-link flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
                 <span>🏛️</span><span>Départements</span>
@@ -104,6 +104,9 @@ function injecterMenuDesktop() {
             <a href="/evangelisation.html" class="nav-link flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
                 <span>📢</span><span>Évangélisation</span>
             </a>
+            <a href="/lifts.html" class="nav-link flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
+                <span>🚐</span><span>Transport/Lifts</span>
+            </a>
             <a href="/departements.html" class="nav-link flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 transition">
                 <span>🏛️</span><span>Départements</span>
             </a>
@@ -118,7 +121,6 @@ function injecterMenuDesktop() {
         </div>
     `;
     
-    // Insérer le sidebar au début du body, avant le contenu principal
     const mainContainer = document.querySelector('.min-h-full');
     if (mainContainer) {
         mainContainer.insertBefore(sidebar, mainContainer.firstChild);
@@ -153,7 +155,6 @@ function gererEvenementsNavigation() {
     if (btnHamburger) btnHamburger.addEventListener('click', toggleMenu);
     if (sidebarOverlay) sidebarOverlay.addEventListener('click', toggleMenu);
 
-    // Déconnexion
     const btnDeconnexion = document.getElementById("btnDeconnexion");
     const btnDeconnexionMobile = document.getElementById("btnDeconnexionMobile");
 
@@ -184,10 +185,8 @@ function marquerPageActive() {
     
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
-        if (href && currentPage.includes(href.replace('/', ''))) {
-            // Retirer les classes de base
+        if (href && href !== '#' && currentPage.includes(href.replace('/', ''))) {
             link.classList.remove('text-slate-400', 'hover:bg-slate-700/50', 'hover:text-slate-200');
-            // Ajouter les classes actives
             link.classList.add('bg-[#3d5a45]', 'text-white', 'shadow-sm');
         }
     });
